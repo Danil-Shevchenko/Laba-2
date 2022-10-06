@@ -36,20 +36,35 @@ public class Main {
 
     public static void main(String[] arghs) {
         Scanner sc = new Scanner(System.in, "cp1251");
-        System.out.print("Введіть розмір матриці:");
-        int length = sc.nextInt();//Вводимо розмір
-        int[][] array = getArray(length);
-        printArray(array);
         try {
-            System.out.print("Введіть номер рядка:");
-            int number = sc.nextInt();//Вводимо номер рядка який хочемо вивести
-            Search(array,number);
+            int max=10;
+            System.out.print("Введіть розмір матриці(Макс=10):");
+            int length = sc.nextInt();//Вводимо розмір
+            int[][] array = getArray(length);
+            printArray(array);
+            while (max>=length)
+            {
+                try {
+                    System.out.print("Введіть номер рядка:");
+                    int number = sc.nextInt();//Вводимо номер рядка який хочемо вивести
+                    Search(array,number);
+                    break;
+                }
+                catch (ArrayIndexOutOfBoundsException e) {
+                    System.out.println("Немає такого номера рядка");//Помилка за вводом неіснуючого рядка
+                    continue;
+                }
+                catch (Exception e){
+                    sc.nextLine();
+                    System.out.println("Введіть ціле число");
+                    continue;
+                }
+            }
         }
-        catch (InputMismatchException e) {
-            System.out.println("Введення рядка замість числа");//Помилка за вводом не числа
-        }
-        catch (ArrayIndexOutOfBoundsException e) {
-            System.out.println("Немає такого номера рядка");//Помилка за вводом неіснуючого рядка
+        catch (InputMismatchException e){
+            sc.nextLine();
+            System.out.println("Невірний формат. Введіть ціле число");
+            main(arghs);
         }
     }
 }
